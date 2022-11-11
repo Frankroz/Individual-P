@@ -1,13 +1,10 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Popup from "../Popup/Popup";
-import { addToFav, addToFavFromDB } from "../../store/actions";
 
 function Login() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const [data, setData] = useState({
     email: "",
@@ -83,35 +80,7 @@ function Login() {
           ).toUTCString() +
           "; path=/";
 
-        try {
-          let saved_localStorage = localStorage.getItem("favorites");
-
-          if (saved_localStorage) {
-            saved_localStorage = JSON.parse(saved_localStorage);
-
-            for (const dog of saved_localStorage) {
-              dispatch(addToFav(dog));
-            }
-          }
-
-          localStorage.removeItem("favorites");
-
-          const saved_db = await axios.get("http://localhost:3001/favorites", {
-            params: {
-              userId: res.data.userId,
-            },
-          });
-
-          if (saved_db.status === 200) {
-            for (const dog of saved_db.data) {
-              addToFavFromDB(dog)(dispatch);
-            }
-          }
-        } catch (err) {
-          console.log(err);
-        }
-
-        //navigate("/home");
+        navigate("/home");
       } else {
         setTrigger(true);
         setMessage("Email or password are incorrect!");

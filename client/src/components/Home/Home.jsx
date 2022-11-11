@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Card from "../Card/Card";
+import NavBar from "../NavBar/NavBar";
 
 function Home() {
   const navigate = useNavigate();
@@ -147,6 +148,7 @@ function Home() {
 
   return (
     <div>
+      <NavBar />
       <div>
         <div>
           <div>
