@@ -106,6 +106,19 @@ function Form() {
           console.log(err);
         });
 
+      setData({
+        name: "",
+        image: "",
+        min_height: "",
+        max_height: "",
+        min_weight: "",
+        max_weight: "",
+        min_lifetime: "",
+        max_lifetime: "",
+        tempers: [],
+        group: "",
+        purpose: "",
+      });
       setLoading(false);
 
       if (res.status === 201) {

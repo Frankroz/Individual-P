@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import TemperCreate from "../TemperCreate/TemperCreate";
 import Popup from "../Popup/Popup";
+import "./EditPopup.css";
 
 function EditPupup({ dog, trigger, setTrigger }) {
   const global_state = useSelector((state) => state);
@@ -110,141 +111,179 @@ function EditPupup({ dog, trigger, setTrigger }) {
   };
 
   return trigger ? (
-    <div>
-      <form onSubmit={handleOnSubmit}>
-        <div>
-          <button onClick={() => setTrigger(false)}>X</button>
-          <h2>Update info</h2>
-          <h3>Name:</h3>
-          <input
-            type="text"
-            name="name"
-            placeholder={dog.name}
-            onChange={handleOnChange}
-            required
-          />
-          <p>{errors.name}</p>
-          <h3>Image</h3>
-          <input
-            type="text"
-            name="image"
-            placeholder={dog.image}
-            onChange={handleOnChange}
-          />
-          <p>{errors.image}</p>
-          <h3>Height:</h3>
-          <input
-            type="text"
-            name="min_height"
-            placeholder={dog.height.split("-")[0]}
-            onChange={handleOnChange}
-            required
-          />
-          <p>{errors.min_height}</p>
-          <input
-            type="text"
-            name="max_height"
-            placeholder={dog.height.split("-")[1]}
-            onChange={handleOnChange}
-            required
-          />
-          <p>{errors.max_height}</p>
-          <h5>Inch</h5>
-          <h3>Weight:</h3>
-          <input
-            type="text"
-            name="min_weight"
-            placeholder={dog.weight.split("-")[0]}
-            onChange={handleOnChange}
-            required
-          />
-          <p>{errors.min_weight}</p>
-          <input
-            type="text"
-            name="max_weight"
-            placeholder={dog.weight.split("-")[1]}
-            onChange={handleOnChange}
-            required
-          />
-          <p>{errors.max_weight}</p>
-          <h5>Lbs.</h5>
-          <h3>Life span:</h3>
-          <input
-            type="text"
-            name="min_lifetime"
-            placeholder={dog.life_span.split("-")[0]}
-            onChange={handleOnChange}
-            required
-          />
-          <p>{errors.min_lifetime}</p>
-          <input
-            type="text"
-            name="max_lifetime"
-            placeholder={dog.life_span.split("-")[1]}
-            onChange={handleOnChange}
-            required
-          />
-          <p>{errors.max_lifetime}</p>
-          <h5>Years</h5>
-        </div>
-        <div>
-          <h3>Group:</h3>
-          <select
-            name="group"
-            id="group"
-            defaultValue={"default"}
-            onChange={handleOnChange}
-            required
-          >
-            <option value="default">Select a group:</option>
-            {groups.map((group) => (
-              <option key={group} value={group}>
-                {group}
-              </option>
-            ))}
-          </select>
-          <h3>Bred for:</h3>
-          <select
-            name="purpose"
-            id="purpose"
-            defaultValue={"default"}
-            onChange={handleOnChange}
-            required
-          >
-            <option value="default">Select a purpose:</option>
-            {bred_for.map((purpose) => (
-              <option key={purpose} value={purpose}>
-                {purpose}
-              </option>
-            ))}
-          </select>
-          <h3>Temperaments:</h3>
-          <select
-            name="tempers"
-            id="tempers"
-            defaultValue={"default"}
-            onChange={handleOnTemper}
-          >
-            <option value="default">Select a temperament:</option>
-            {global_state.tempers.map((temper) => (
-              <option key={temper} value={temper}>
-                {temper}
-              </option>
-            ))}
-          </select>
-          <div>
-            {data.tempers.map((temper, id) => (
-              <TemperCreate
-                key={temper + id}
-                onClose={onClose}
-                id={temper}
-                text={temper}
-              />
-            ))}
+    <div className="editPromptContainer">
+      <div className="editPromptInnerContainer">
+        <button className="popupCloseBtn" onClick={() => setTrigger(false)}>
+          X
+        </button>
+        <form onSubmit={handleOnSubmit}>
+          <div className="innerCreateContainer">
+            <h2 className="createTitle">Update info</h2>
+            <hr />
+            <div className="createContent">
+              <div className="detailLabelContainer">
+                <h3 className="detailLabel">Name:</h3>
+                <input
+                  className="detailDesc"
+                  type="text"
+                  name="name"
+                  placeholder={dog.name}
+                  onChange={handleOnChange}
+                  required
+                />
+              </div>
+              <p className="errorMsg">{errors.name}</p>
+              <div className="detailLabelContainer">
+                <h3 className="detailLabel">Image</h3>
+                <input
+                  className="detailDesc"
+                  type="text"
+                  name="image"
+                  placeholder={dog.image}
+                  onChange={handleOnChange}
+                />
+              </div>
+              <p className="errorMsg">{errors.image}</p>
+              <div className="detailLabelContainer">
+                <h3 className="detailLabel">Height:</h3>
+                <input
+                  className="detailDesc inputCreate"
+                  type="text"
+                  name="min_height"
+                  placeholder={dog.height.split("-")[0]}
+                  onChange={handleOnChange}
+                  required
+                />
+                <input
+                  className="detailDesc inputCreate"
+                  type="text"
+                  name="max_height"
+                  placeholder={dog.height.split("-")[1]}
+                  onChange={handleOnChange}
+                  required
+                />
+                <h5 className="desc">Inch</h5>
+              </div>
+              <p className="errorMsg">{errors.min_height}</p>
+              <p className="errorMsg">{errors.max_height}</p>
+              <div className="detailLabelContainer">
+                <h3 className="detailLabel">Weight:</h3>
+                <input
+                  className="detailDesc inputCreate"
+                  type="text"
+                  name="min_weight"
+                  placeholder={dog.weight.split("-")[0]}
+                  onChange={handleOnChange}
+                  required
+                />
+                <input
+                  className="detailDesc inputCreate"
+                  type="text"
+                  name="max_weight"
+                  placeholder={dog.weight.split("-")[1]}
+                  onChange={handleOnChange}
+                  required
+                />
+                <h5 className="desc">Lbs.</h5>
+              </div>
+              <p className="errorMsg">{errors.min_weight}</p>
+              <p className="errorMsg">{errors.max_weight}</p>
+              <div className="detailLabelContainer">
+                <h3 className="detailLabel">Life span:</h3>
+                <input
+                  className="detailDesc inputCreate"
+                  type="text"
+                  name="min_lifetime"
+                  placeholder={dog.life_span.split("-")[0]}
+                  onChange={handleOnChange}
+                  required
+                />
+                <input
+                  className="detailDesc inputCreate"
+                  type="text"
+                  name="max_lifetime"
+                  placeholder={dog.life_span.split("-")[1]}
+                  onChange={handleOnChange}
+                  required
+                />
+                <h5 className="desc">Years</h5>
+              </div>
+              <p className="errorMsg">{errors.min_lifetime}</p>
+              <p className="errorMsg">{errors.max_lifetime}</p>
+            </div>
+            <div className="createContent">
+              <div className="detailLabelContainer">
+                <h3 className="detailLabel">Group:</h3>
+                <select
+                  className="detailDesc selectCreate"
+                  name="group"
+                  id="group"
+                  defaultValue={"default"}
+                  onChange={handleOnChange}
+                  required
+                >
+                  <option value="default">Select a group:</option>
+                  {groups.map((group) => (
+                    <option key={group} value={group}>
+                      {group}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="detailLabelContainer">
+                <h3 className="detailLabel">Bred for:</h3>
+                <select
+                  className="detailDesc selectCreate"
+                  name="purpose"
+                  id="purpose"
+                  defaultValue={"default"}
+                  onChange={handleOnChange}
+                  required
+                >
+                  <option value="default">Select a purpose:</option>
+                  {bred_for.map((purpose) => (
+                    <option key={purpose} value={purpose}>
+                      {purpose}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="detailLabelContainer">
+                <h3 className="detailLabel">Temperaments:</h3>
+                <select
+                  className="detailDesc selectCreate"
+                  name="tempers"
+                  id="tempers"
+                  defaultValue={"default"}
+                  onChange={handleOnTemper}
+                >
+                  <option value="default">Select a temperament:</option>
+                  {global_state.tempers.map((temper) => (
+                    <option key={temper} value={temper}>
+                      {temper}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="tempersList">
+                {data.tempers.map((temper, id) => (
+                  <TemperCreate
+                    key={temper + id}
+                    onClose={onClose}
+                    id={temper}
+                    text={temper}
+                  />
+                ))}
+              </div>
+            </div>
+            <dir className="createAddBtnContainer">
+              <button className="createAddBtn" type="submit">
+                Update
+              </button>
+            </dir>
           </div>
-        </div>
-        <button type="submit">Update</button>
-      </form>
+        </form>
+      </div>
       <Popup trigger={popupTrigger} setTrigger={setPopupTrigger}>
         <h4>{popupMessage}</h4>
       </Popup>

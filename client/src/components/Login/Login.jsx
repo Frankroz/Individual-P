@@ -56,9 +56,25 @@ function Login() {
       setLoading(false);
 
       if (res.status === 200) {
-        document.cookie = "userId=" + res.data.userId + "; path=/";
+        document.cookie =
+          "userId=" +
+          res.data.userId +
+          "; path=/;expires=" +
+          new Date(
+            new Date().getFullYear(),
+            new Date().getMonth(),
+            new Date().getDate() + 1
+          );
 
-        document.cookie = "username=" + res.data.username + "; path=/";
+        document.cookie =
+          "username=" +
+          res.data.username +
+          "; path=/;expires=" +
+          new Date(
+            new Date().getFullYear(),
+            new Date().getMonth(),
+            new Date().getDate() + 1
+          );
 
         navigate("/home");
       } else {

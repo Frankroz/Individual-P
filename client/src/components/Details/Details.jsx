@@ -6,7 +6,7 @@ import EditPopup from "../EditPopup/EditPopup";
 import DeletePrompt from "../DeletePrompt/DeletePrompt";
 import Popup from "../Popup/Popup";
 import axios from "axios";
-import { FaHeart } from "react-icons/fa";
+import { FaHeart, FaEdit, FaTrashAlt } from "react-icons/fa";
 import { addToFav, remFromFav } from "../../store/actions";
 import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
@@ -111,10 +111,19 @@ function Details() {
               </div>
               <div>
                 {dog.hasOwnProperty("temperaments") ? (
-                  <div>
-                    <button onClick={() => setTrigger(true)}>Edit</button>
-                    <button onClick={() => setDeleteTrigger(true)}>
+                  <div className="editDeleteBtnContainer">
+                    <button
+                      className="detailEditBtn"
+                      onClick={() => setTrigger(true)}
+                    >
+                      Edit <FaEdit />
+                    </button>
+                    <button
+                      className="detailDeleteBtn"
+                      onClick={() => setDeleteTrigger(true)}
+                    >
                       Delete
+                      <FaTrashAlt />
                     </button>
                   </div>
                 ) : (
