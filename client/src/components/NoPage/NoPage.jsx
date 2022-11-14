@@ -1,14 +1,19 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import NavBar from "../NavBar/NavBar";
+import Footer from "../Footer/Footer";
+import "./NoPage.css";
 
 function NoPage() {
-  const navigate = useNavigate();
   return (
     <div>
-      <br />
-      <h2>Opps! Seems we don't have that info</h2>
-
-      <button onClick={() => navigate("/home")}>Go back to home</button>
+      <NavBar />
+      <div className="noPageContainer">
+        <div className="innerNoPageContainer">
+          <h1 className="noPageTitle">404</h1>
+          <h2 className="noPageMsg">Opps! Seems we don't have that info</h2>
+        </div>
+      </div>
+      <Footer />
     </div>
   );
 }

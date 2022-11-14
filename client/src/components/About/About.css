@@ -1,0 +1,19 @@
+.aboutContainer {
+  padding: 30px;
+  flex-direction: column;
+  height: 75.6vh;
+}
+
+.aboutTiltle {
+  text-transform: uppercase;
+  color: #ffc800;
+  font-size: 2.3rem;
+  margin-bottom: 0;
+  font-family: gotham, Verdana, Arial, sans-serif;
+}
+
+.aboutP {
+    font-size: 1.5rem;
+}
+
+

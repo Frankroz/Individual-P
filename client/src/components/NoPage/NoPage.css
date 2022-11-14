@@ -1,0 +1,28 @@
+.noPageContainer {
+  width: 100%;
+  background-color: #c1c1c1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 81.7vh;
+}
+.innerNoPageContainer {
+  width: 50%;
+  background-color: #fff;
+  height: 35vh;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.noPageTitle {
+  color: #000;
+  font-size: 4rem;
+  font-family: dincond, Arial, Helvetica, sans-serif;
+}
+.noPageMsg {
+  color: #000;
+  font-size: 2rem;
+  font-family: dincond, Arial, Helvetica, sans-serif;
+}

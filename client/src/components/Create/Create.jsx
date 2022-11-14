@@ -3,6 +3,11 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import Popup from "../Popup/Popup";
 import TemperCreate from "../TemperCreate/TemperCreate";
+import NavBar from "../NavBar/NavBar";
+import Footer from "../Footer/Footer";
+import Loader from "../Loader/Loader";
+import "./Create.css";
+import { useEffect } from "react";
 
 function Form() {
   const global_state = useSelector((state) => state);
@@ -10,6 +15,7 @@ function Form() {
   let bred_for = getBredFor(global_state.dogs);
   const [trigger, setTrigger] = useState(false);
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const [data, setData] = useState({
     name: "",
@@ -25,6 +31,10 @@ function Form() {
     purpose: "",
   });
   const [errors, setErrors] = useState(data);
+
+  useEffect(() => {
+    setLoading(false);
+  }, [setLoading]);
 
   const handleOnChange = (e) => {
     setData({
@@ -56,6 +66,7 @@ function Form() {
   };
 
   const handleOnSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
 
     try {
@@ -63,6 +74,7 @@ function Form() {
         if (error !== "group" && error !== "purpose" && error !== "tempers") {
           if (errors[error]?.length) {
             setTrigger(true);
+            setLoading(false);
             return setMessage(errors[error]);
           }
         }
@@ -70,6 +82,7 @@ function Form() {
 
       if (!data.tempers.length) {
         setTrigger(true);
+        setLoading(false);
         return setMessage("At least a temper must be selected");
       }
 
@@ -93,6 +106,8 @@ function Form() {
           console.log(err);
         });
 
+      setLoading(false);
+
       if (res.status === 201) {
         setTrigger(true);
         return setMessage("Succesfully added");
@@ -108,141 +123,191 @@ function Form() {
 
   return (
     <div>
-      <form onSubmit={handleOnSubmit}>
-        <div>
-          <h3>Name:</h3>
-          <input
-            type="text"
-            name="name"
-            placeholder="Name"
-            onChange={handleOnChange}
-            required
-          />
-          <p>{errors.name}</p>
-          <h3>Image</h3>
-          <input
-            type="text"
-            name="image"
-            placeholder="Url"
-            onChange={handleOnChange}
-          />
-          <p>{errors.image}</p>
-          <h3>Height:</h3>
-          <input
-            type="text"
-            name="min_height"
-            placeholder="Min. height"
-            onChange={handleOnChange}
-            required
-          />
-          <p>{errors.min_height}</p>
-          <input
-            type="text"
-            name="max_height"
-            placeholder="Max. height"
-            onChange={handleOnChange}
-            required
-          />
-          <p>{errors.max_height}</p>
-          <h5>Inch</h5>
-          <h3>Weight:</h3>
-          <input
-            type="text"
-            name="min_weight"
-            placeholder="Min. weight"
-            onChange={handleOnChange}
-            required
-          />
-          <p>{errors.min_weight}</p>
-          <input
-            type="text"
-            name="max_weight"
-            placeholder="Max. weight"
-            onChange={handleOnChange}
-            required
-          />
-          <p>{errors.max_weight}</p>
-          <h5>Lbs.</h5>
-          <h3>Life span:</h3>
-          <input
-            type="text"
-            name="min_lifetime"
-            placeholder="Min. lifetime"
-            onChange={handleOnChange}
-            required
-          />
-          <p>{errors.min_lifetime}</p>
-          <input
-            type="text"
-            name="max_lifetime"
-            placeholder="Max. lifetime"
-            onChange={handleOnChange}
-            required
-          />
-          <p>{errors.max_lifetime}</p>
-          <h5>Years</h5>
+      <NavBar />
+      <div className="createContainer">
+        <div className="createInnerContainer">
+          {loading ? (
+            <div className="innerCreateContainer">
+              <Loader />
+            </div>
+          ) : (
+            <div className="innerCreateContainer">
+              <h1 className="createTitle">Add a new breed</h1>
+              <hr />
+              <form onSubmit={handleOnSubmit}>
+                <div className="createContent">
+                  <div className="detailLabelContainer">
+                    <h3 className="detailLabel">Name:</h3>
+                    <input
+                      className="detailDesc"
+                      type="text"
+                      name="name"
+                      placeholder="Name"
+                      onChange={handleOnChange}
+                      required
+                    />
+                  </div>
+                  <span className="errorMsg">{errors.name}</span>
+                  <div className="detailLabelContainer">
+                    <h3 className="detailLabel">Image</h3>
+                    <input
+                      className="detailDesc"
+                      type="text"
+                      name="image"
+                      placeholder="Url"
+                      onChange={handleOnChange}
+                    />
+                  </div>
+                  <p className="errorMsg">{errors.image}</p>
+                  <div className="detailLabelContainer">
+                    <h3 className="detailLabel">Height:</h3>
+                    <input
+                      className="detailDesc inputCreate"
+                      type="text"
+                      name="min_height"
+                      placeholder="Min. height"
+                      onChange={handleOnChange}
+                      required
+                    />
+                    -
+                    <input
+                      className="detailDesc inputCreate"
+                      type="text"
+                      name="max_height"
+                      placeholder="Max. height"
+                      onChange={handleOnChange}
+                      required
+                    />
+                    <h5 className="desc">Inch.</h5>
+                  </div>
+                  <p className="errorMsg">{errors.max_height}</p>
+                  <p className="errorMsg">{errors.min_height}</p>
+                  <div className="detailLabelContainer">
+                    <h3 className="detailLabel">Weight:</h3>
+                    <input
+                      className="detailDesc inputCreate"
+                      type="text"
+                      name="min_weight"
+                      placeholder="Min. weight"
+                      onChange={handleOnChange}
+                      required
+                    />
+                    -
+                    <input
+                      className="detailDesc inputCreate"
+                      type="text"
+                      name="max_weight"
+                      placeholder="Max. weight"
+                      onChange={handleOnChange}
+                      required
+                    />
+                    <h5 className="desc">Lbs.</h5>
+                  </div>
+                  <p className="errorMsg">{errors.min_weight}</p>
+                  <p className="errorMsg">{errors.max_weight}</p>
+                  <div className="detailLabelContainer">
+                    <h3 className="detailLabel">Life span:</h3>
+                    <input
+                      className="detailDesc inputCreate"
+                      type="text"
+                      name="min_lifetime"
+                      placeholder="Min. lifetime"
+                      onChange={handleOnChange}
+                      required
+                    />
+                    -
+                    <input
+                      className="detailDesc inputCreate"
+                      type="text"
+                      name="max_lifetime"
+                      placeholder="Max. lifetime"
+                      onChange={handleOnChange}
+                      required
+                    />
+                    <h5 className="desc">Years</h5>
+                  </div>
+                  <p className="errorMsg">{errors.min_lifetime}</p>
+                  <p className="errorMsg">{errors.max_lifetime}</p>
+                </div>
+                <div className="createContent">
+                  <div className="detailLabelContainer">
+                    <h3 className="detailLabel">Group:</h3>
+                    <select
+                      className="detailDesc selectCreate"
+                      name="group"
+                      id="group"
+                      defaultValue={"default"}
+                      onChange={handleOnChange}
+                      required
+                    >
+                      <option value="default">Select a group:</option>
+                      {groups.map((group) => (
+                        <option key={group} value={group}>
+                          {group}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="detailLabelContainer">
+                    <h3 className="detailLabel">Bred for:</h3>
+                    <select
+                      className="detailDesc selectCreate"
+                      name="purpose"
+                      id="purpose"
+                      defaultValue={"default"}
+                      onChange={handleOnChange}
+                      required
+                    >
+                      <option value="default">Select a purpose:</option>
+                      {bred_for.map((purpose) => (
+                        <option key={purpose} value={purpose}>
+                          {purpose}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="detailLabelContainer">
+                    <h3 className="detailLabel">Temperaments:</h3>
+                    <select
+                      className="detailDesc selectCreate"
+                      name="tempers"
+                      id="tempers"
+                      defaultValue={"default"}
+                      onChange={handleOnTemper}
+                    >
+                      <option value="default">Select a temperament:</option>
+                      {global_state.tempers.map((temper) => (
+                        <option key={temper} value={temper}>
+                          {temper}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="tempersList">
+                    {data.tempers.map((temper, id) => (
+                      <TemperCreate
+                        key={temper + id}
+                        onClose={onClose}
+                        id={temper}
+                        text={temper}
+                      />
+                    ))}
+                  </div>
+                </div>
+                <div className="createAddBtnContainer">
+                  <button className="createAddBtn" type="submit">
+                    Add
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
         </div>
-        <div>
-          <h3>Group:</h3>
-          <select
-            name="group"
-            id="group"
-            defaultValue={"default"}
-            onChange={handleOnChange}
-            required
-          >
-            <option value="default">Select a group:</option>
-            {groups.map((group) => (
-              <option key={group} value={group}>
-                {group}
-              </option>
-            ))}
-          </select>
-          <h3>Bred for:</h3>
-          <select
-            name="purpose"
-            id="purpose"
-            defaultValue={"default"}
-            onChange={handleOnChange}
-            required
-          >
-            <option value="default">Select a purpose:</option>
-            {bred_for.map((purpose) => (
-              <option key={purpose} value={purpose}>
-                {purpose}
-              </option>
-            ))}
-          </select>
-          <h3>Temperaments:</h3>
-          <select
-            name="tempers"
-            id="tempers"
-            defaultValue={"default"}
-            onChange={handleOnTemper}
-          >
-            <option value="default">Select a temperament:</option>
-            {global_state.tempers.map((temper) => (
-              <option key={temper} value={temper}>
-                {temper}
-              </option>
-            ))}
-          </select>
-          <div>
-            {data.tempers.map((temper, id) => (
-              <TemperCreate
-                key={temper + id}
-                onClose={onClose}
-                id={temper}
-                text={temper}
-              />
-            ))}
-          </div>
-        </div>
-        <button type="submit">Add</button>
-      </form>
+      </div>
       <Popup trigger={trigger} setTrigger={setTrigger}>
-        <h4>{message}</h4>
+        <p>{message}</p>
       </Popup>
+      <Footer />
     </div>
   );
 }
@@ -305,7 +370,7 @@ const validateMinHeight = (min_height) => {
   } else if (!Number(min_height)) {
     return "Minimun height must be a number";
   } else if (parseInt(min_height) < 3) {
-    return "I doubt that breed is smaller than 5 Inch";
+    return "I doubt that breed is smaller than 5 Inches";
   } else {
     return "";
   }

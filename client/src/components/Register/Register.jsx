@@ -2,6 +2,10 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Popup from "../Popup/Popup";
+import NavBar from "../NavBar/NavBar";
+import Footer from "../Footer/Footer";
+import Loader from "../Loader/Loader";
+import "./Register.css"
 
 function Register() {
   const navigate = useNavigate();
@@ -14,6 +18,7 @@ function Register() {
   const [errors, setErrors] = useState(data);
   const [trigger, setTrigger] = useState(false);
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const handleOnChange = (e) => {
     setData({
@@ -30,11 +35,12 @@ function Register() {
   };
 
   useEffect(() => {
-    console.log(document.cookie);
+    setLoading(false);
     if (document.cookie.includes("userId")) navigate("/home");
   }, [navigate]);
 
   const onSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     try {
       for (const error in errors) {
@@ -46,7 +52,9 @@ function Register() {
 
       const res = await axios.post("http://localhost:3001/register", data);
 
+      setLoading(false);
       if (res.status === 201) {
+        console.log(res.data)
         setTrigger(true);
         setMessage("Welcome to the party");
       }
@@ -59,43 +67,69 @@ function Register() {
       } else {
         setMessage("There was an error registering");
       }
+      setLoading(false)
     }
   };
 
   return (
     <div>
-      <h1>Register</h1>
-      <form onSubmit={onSubmit}>
-        <h3>Username:</h3>
-        <input
-          onChange={handleOnChange}
-          type="username"
-          name="username"
-          placeholder="User"
-          required
-        />
-        <p>{errors.username}</p>
-        <h3>Email:</h3>
-        <input
-          onChange={handleOnChange}
-          type="email"
-          name="email"
-          placeholder="Email"
-          required
-        />
-        <p>{errors.email}</p>
-        <h3>Password:</h3>
-        <input
-          onChange={handleOnChange}
-          type="password"
-          name="password"
-          placeholder="Password"
-          required
-        />
-        <p>{errors.password}</p>
-        <input type="submit" value="Register" />
-      </form>
-      <button onClick={() => navigate("/login")}>Log in</button>
+      <NavBar />
+      <div className="loginContainer">
+        {loading ? (
+          <div className="innerRegisterContainer">
+            <Loader />
+          </div>
+        ) : (
+          <div className="innerRegisterContainer">
+            <h1 className="loginTitle">Register</h1>
+            <hr className="loginHr" />
+            <form onSubmit={onSubmit}>
+              <div className="loginText">
+                <div className="detailLabelContainer">
+                  <h3 className="detailLabel">Username:</h3>
+                  <input
+                    className="detailDesc"
+                    onChange={handleOnChange}
+                    type="username"
+                    name="username"
+                    placeholder="User"
+                    required
+                  />
+                </div>
+                <p className="errorMsg">{errors.username}</p>
+                <div className="detailLabelContainer">
+                  <h3 className="detailLabel">Email:</h3>
+                  <input
+                    className="detailDesc"
+                    onChange={handleOnChange}
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    required
+                  />
+                </div>
+                <p className="errorMsg">{errors.email}</p>
+                <div className="detailLabelContainer">
+                  <h3 className="detailLabel">Password:</h3>
+                  <input
+                    className="detailDesc"
+                    onChange={handleOnChange}
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    required
+                  />
+                </div>
+                <p className="errorMsg">{errors.password}</p>
+                <input className="pageBtn loginBtn" type="submit" value="Register" />
+              </div>
+            </form>
+            <hr className="loginHr" />
+            <button className="pageBtn loginBtn" onClick={() => navigate("/login")}>Log in</button>
+          </div>
+        )}
+      </div>
+      <Footer />
       <Popup trigger={trigger} setTrigger={setTrigger}>
         <h3>{message}</h3>
       </Popup>

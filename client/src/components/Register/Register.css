@@ -1,0 +1,11 @@
+.innerRegisterContainer {
+    width: 50%;
+  background-color: #fff;
+  height: 40vh;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  align-items: center;
+  justify-content: center;
+}

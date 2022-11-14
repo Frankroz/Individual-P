@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import NoPage from "../NoPage/NoPage";
 import EditPopup from "../EditPopup/EditPopup";
@@ -7,11 +7,14 @@ import DeletePrompt from "../DeletePrompt/DeletePrompt";
 import Popup from "../Popup/Popup";
 import axios from "axios";
 import { FaHeart } from "react-icons/fa";
-import { useDispatch } from "react-redux";
 import { addToFav, remFromFav } from "../../store/actions";
+import NavBar from "../NavBar/NavBar";
+import Footer from "../Footer/Footer";
+import "./Details.css";
 
 function Details() {
   const params = useParams();
+  const favorites = useSelector((state) => state.favorites);
   const dogs = useSelector((state) => state.dogs);
   const dog = dogs.filter((dog) => parseInt(dog.id) === parseInt(params.id))[0];
   const [trigger, setTrigger] = useState(false);
@@ -22,11 +25,11 @@ function Details() {
 
   const handleOnClick = () => {
     const button = document.getElementById(dog.name + dog.id);
-    if (!button.className) {
+    if (button.className === "addToFavsBtn") {
       button.className = "addedToFavs";
       dispatch(addToFav(dog));
     } else {
-      button.className = "";
+      button.className = "addToFavsBtn";
       dispatch(remFromFav(dog));
     }
   };
@@ -52,40 +55,74 @@ function Details() {
   if (dog) {
     return (
       <div>
-        <img src={dog.image.url ? dog.image.url : dog.image} alt={dog.name} />
-        <h2>{dog.name}</h2>
-        <h4>
-          {(dog.height.imperial ? dog.height.imperial : dog.height) + " inch"}
-        </h4>
-        <h4>
-          {(dog.weight.imperial ? dog.weight.imperial : dog.weight) + " lbs"}
-        </h4>
-        <h3>
-          {dog.life_span.includes("years")
-            ? dog.life_span
-            : dog.life_span + " years"}
-        </h3>
-        <button
-          className={
-            document.getElementById(dog.name + dog.id)
-              ? document.getElementById(dog.name + dog.id).className
-              : ""
-          }
-          onClick={handleOnClick}
-          id={dog.name + dog.id}
-        >
-          <FaHeart size={49} />
-        </button>
-        <p>{dog.temperament}</p>
-        <div>
-          {dog.hasOwnProperty("temperaments") ? (
-            <div>
-              <button onClick={() => setTrigger(true)}>Edit</button>
-              <button onClick={() => setDeleteTrigger(true)}>Delete</button>
+        <NavBar />
+        <div className="detailContainer">
+          <div className="innerDetailContainer">
+            <div className="detailImgContainer">
+              <img
+                className="detailImg"
+                src={dog.image.url ? dog.image.url : dog.image}
+                alt={dog.name}
+              />
             </div>
-          ) : (
-            <div></div>
-          )}
+            <div className="detailTextContiner">
+              <div className="detailHeader">
+                <h2 className="detailTitle">{dog.name}</h2>
+
+                {document.cookie ? (
+                  <button
+                    className={
+                      favorites.includes(dog) ? "addedToFavs" : "addToFavsBtn"
+                    }
+                    onClick={handleOnClick}
+                    id={dog.name + dog.id}
+                  >
+                    <FaHeart size={40} />
+                  </button>
+                ) : (
+                  ""
+                )}
+              </div>
+              <div className="detailLabelContainer">
+                <p className="detailLabel">Height:</p>
+                <p>
+                  {(dog.height.imperial ? dog.height.imperial : dog.height) +
+                    " inch"}
+                </p>
+              </div>
+              <div className="detailLabelContainer">
+                <p className="detailLabel">Weight:</p>
+                <p>
+                  {(dog.weight.imperial ? dog.weight.imperial : dog.weight) +
+                    " lbs"}
+                </p>
+              </div>
+              <div className="detailLabelContainer">
+                <p className="detailLabel">Life span:</p>
+                <p className="detailDesc">
+                  {dog.life_span.includes("years")
+                    ? dog.life_span
+                    : dog.life_span + " years"}
+                </p>
+              </div>
+              <div className="detailLabelContainer">
+                <p className="detailLabel">Life span:</p>
+                <p className="detailDesc">{dog.temperament}</p>
+              </div>
+              <div>
+                {dog.hasOwnProperty("temperaments") ? (
+                  <div>
+                    <button onClick={() => setTrigger(true)}>Edit</button>
+                    <button onClick={() => setDeleteTrigger(true)}>
+                      Delete
+                    </button>
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
+            </div>
+          </div>
         </div>
         <EditPopup dog={dog} trigger={trigger} setTrigger={setTrigger} />
         <DeletePrompt
@@ -96,6 +133,8 @@ function Details() {
         <Popup trigger={popupTrigger} setTrigger={setPopupTrigger}>
           <h3>{message}</h3>
         </Popup>
+
+        <Footer />
       </div>
     );
   } else {

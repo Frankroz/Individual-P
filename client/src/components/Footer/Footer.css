@@ -1,0 +1,34 @@
+.footerContainer {
+  width: 100%;
+  height: 90px;
+  padding: 0;
+  display: flex;
+  background-color: #000;
+  align-items: center;
+  justify-content: center;
+}
+
+.footerTitle {
+  color: #fff;
+  font-size: 1.5rem;
+  font-family: gotham, Verdana, Arial, sans-serif;
+}
+
+.footerSep {
+  margin-left: 20px;
+  margin-right: 20px;
+  color: #fff;
+}
+
+.footerBtn {
+  cursor: pointer;
+  color: #fff;
+  background-color: transparent;
+  border: none;
+  transition: 0.25s;
+  font-size: 1.5rem;
+}
+
+.footerBtn:hover {
+  color: #ffc800;
+}

@@ -1,0 +1,80 @@
+.landingContainer {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.imageContainer {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.landingImg {
+  width: 100%;
+}
+
+.innerInnerText {
+  border: 5px solid #ffc800;
+  padding: 2vh;
+  height: 92vh;
+}
+
+.textContainer {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+}
+
+.innerLandingContainer {
+  position: absolute;
+  display: list-item;
+  align-items: center;
+  padding: 2vh;
+  width: 30rem;
+  height: 96vh;
+  background-color: #00000099;
+  text-transform: uppercase;
+}
+
+.landingTitle {
+  margin-bottom: 0;
+  font-size: 3rem;
+  color: #fff;
+  font-family: gotham, Verdana, Arial, sans-serif;
+}
+
+.landingSecondTitle {
+  margin-top: 0;
+  font-size: 3rem;
+  color: #ffc800;
+  font-family: gotham, Verdana, Arial, sans-serif;
+}
+
+.btnContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 40vh;
+}
+
+.landingBtn {
+  cursor: pointer;
+  font-size: 1.3rem;
+  margin: 10px;
+  padding: 8px;
+  padding-left: 20px;
+  padding-right: 20px;
+  color: #000;
+  background-color: #ffc800;
+  border: 2px solid transparent;
+  text-transform: uppercase;
+  transition: 0.25s ease-in-out;
+  font-family: gotham, Verdana, Arial, sans-serif;
+}
+
+.landingBtn:hover {
+  color: #fff;
+  background-color: #000;
+  border: 2px solid #fff;
+}

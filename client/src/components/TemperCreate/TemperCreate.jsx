@@ -1,10 +1,11 @@
 import React from "react";
+import "./TemperCreate.css"
 
 function Temper_Creation({ onClose, id, text }) {
   return (
-    <div>
-      <button onClick={() => onClose(id)}>X</button>
-      <label htmlFor="">{text}</label>
+    <div className="temperContainer">
+      <button className="temperCloseBtn" onClick={() => onClose(id)}>X</button>
+      <label className="temperDesc" htmlFor="">{text}</label>
     </div>
   );
 }
