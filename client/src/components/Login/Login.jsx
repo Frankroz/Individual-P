@@ -62,8 +62,8 @@ function Login() {
           "; path=/;expires=" +
           new Date(
             new Date().getFullYear(),
-            new Date().getMonth(),
-            new Date().getDate() + 1
+            new Date().getMonth() + 1,
+            new Date().getDate()
           );
 
         document.cookie =
@@ -72,17 +72,18 @@ function Login() {
           "; path=/;expires=" +
           new Date(
             new Date().getFullYear(),
-            new Date().getMonth(),
-            new Date().getDate() + 1
+            new Date().getMonth() + 1,
+            new Date().getDate()
           );
 
         navigate("/home");
       } else {
+        setLoading(false);
         setTrigger(true);
         setMessage("Email or password are incorrect!");
       }
-      setLoading(false);
     } catch {
+      setLoading(false);
       setTrigger(true);
       setMessage("Email or password are incorrect!");
     }

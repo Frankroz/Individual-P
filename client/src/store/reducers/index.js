@@ -5,6 +5,7 @@ const ADD_FAV = "ADD_FAV";
 const REMOVE_FAV = "REMOVE_FAV";
 const GET_GROUPS = "GET_GROUPS";
 const GET_BREDFOR = "GET_BREDFOR";
+const REMOVE_ALL_FAV = "REMOVE_ALL_FAV";
 
 export const actions = {
   GET_DOGS,
@@ -14,6 +15,7 @@ export const actions = {
   GET_BREDFOR,
   REMOVE_FAV,
   ADD_FAV,
+  REMOVE_ALL_FAV,
 };
 
 const initialState = {
@@ -38,6 +40,11 @@ function reducer(state = initialState, { type, payload }) {
         ...state,
         favorites: state.favorites.filter((dog) => dog.id !== payload.id),
       };
+    case REMOVE_ALL_FAV:
+      return {
+        ...state,
+        favorites: []
+      }
 
     default:
       return { ...state };

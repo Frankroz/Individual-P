@@ -1,10 +1,14 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import icon from "../img/icon.png";
 import "./NavBar.css";
+import {removeAllFavs} from "../../store/actions"
 
 function NavBar() {
+  const dispatch = useDispatch()
   const navigate = useNavigate();
+
   return (
     <div className="navBarContainer">
       <div className="leftNavBar">
@@ -36,6 +40,8 @@ function NavBar() {
                   name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
                 navigate("/login");
               }
+
+              dispatch(removeAllFavs())
             }}
           >
             Logout

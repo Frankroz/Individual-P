@@ -35,3 +35,7 @@ export const addToFav = (dog) => {
 export const remFromFav = (dog) => {
   return { type: actions.REMOVE_FAV, payload: dog };
 };
+
+export const removeAllFavs = () => {
+  return { type: actions.REMOVE_ALL_FAV}
+}
