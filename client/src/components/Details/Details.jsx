@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import NoPage from "../NoPage/NoPage";
 import EditPopup from "../EditPopup/EditPopup";
 import DeletePrompt from "../DeletePrompt/DeletePrompt";
 import Popup from "../Popup/Popup";
 import axios from "axios";
 import { FaHeart, FaEdit, FaTrashAlt } from "react-icons/fa";
-import { addToFav, remFromFav } from "../../store/actions";
+import { addToFav, remFromFav, getDogs } from "../../store/actions";
 import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
 import "./Details.css";
@@ -22,6 +22,7 @@ function Details() {
   const [popupTrigger, setPopupTrigger] = useState(false);
   const [message, setMessage] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   const handleOnClick = () => {
     const button = document.getElementById(dog.name + dog.id);
@@ -41,7 +42,9 @@ function Details() {
 
       if (res.status === 204) {
         setPopupTrigger(true);
+        getDogs()(dispatch);
         setMessage("Successfully deleted");
+        navigate("/home")
       } else {
         setPopupTrigger(true);
         setMessage("There was an error during the process");

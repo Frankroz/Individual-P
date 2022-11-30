@@ -1,9 +1,10 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import TemperCreate from "../TemperCreate/TemperCreate";
 import Popup from "../Popup/Popup";
 import "./EditPopup.css";
+import { getDogs } from "../../store/actions";
 
 function EditPupup({ dog, trigger, setTrigger }) {
   const global_state = useSelector((state) => state);
@@ -11,6 +12,7 @@ function EditPupup({ dog, trigger, setTrigger }) {
   let bred_for = getBredFor(global_state.dogs);
   const [popupTrigger, setPopupTrigger] = useState(false);
   const [popupMessage, setPopupMessage] = useState("");
+  const dispatch = useDispatch()
 
   const [data, setData] = useState({
     name: "",
@@ -99,6 +101,7 @@ function EditPupup({ dog, trigger, setTrigger }) {
 
       if (res?.status === 204) {
         setPopupTrigger(true);
+        getDogs()(dispatch);
         return setPopupMessage("Succesfully updated");
       } else {
         setPopupTrigger(true);

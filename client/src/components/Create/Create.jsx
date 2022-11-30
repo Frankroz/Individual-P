@@ -1,13 +1,13 @@
 import axios from "axios";
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Popup from "../Popup/Popup";
 import TemperCreate from "../TemperCreate/TemperCreate";
 import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
 import Loader from "../Loader/Loader";
 import "./Create.css";
-import { useEffect } from "react";
+import { getDogs } from "../../store/actions";
 
 function Form() {
   const global_state = useSelector((state) => state);
@@ -16,6 +16,7 @@ function Form() {
   const [trigger, setTrigger] = useState(false);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
 
   const [data, setData] = useState({
     name: "",
@@ -123,6 +124,7 @@ function Form() {
 
       if (res.status === 201) {
         setTrigger(true);
+        getDogs()(dispatch);
         return setMessage("Succesfully added");
       } else {
         setTrigger(true);
