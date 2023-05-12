@@ -3,7 +3,7 @@ import { actions } from "../reducers";
 
 export const getDogs = () => async (dispatch) => {
   try {
-    const res = await axios.get("http://localhost:3001/dogs");
+    const res = await axios.get("https://individual-pback-production.up.railway.app/dogs");
     dispatch({ type: actions.GET_DOGS, payload: res.data });
   } catch (err) {
     throw new Error(err.message);
@@ -12,7 +12,7 @@ export const getDogs = () => async (dispatch) => {
 
 export const getDetailedDog = (id) => async (dispatch) => {
   try {
-    const res = await axios.get("http://localhost:3001/dogs/" + id);
+    const res = await axios.get("https://individual-pback-production.up.railway.app/dogs/" + id);
     dispatch({ type: actions.GET_DOGS, payload: res.data });
   } catch (err) {
     throw new Error(err.message);
@@ -21,7 +21,7 @@ export const getDetailedDog = (id) => async (dispatch) => {
 
 export const getTempers = () => async (dispatch) => {
   try {
-    const res = await axios.get("http://localhost:3001/temperaments");
+    const res = await axios.get("https://individual-pback-production.up.railway.app/temperaments");
     dispatch({ type: actions.GET_TEMPERS, payload: res.data });
   } catch (err) {
     throw new Error(err.message);
